@@ -1,0 +1,202 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.container {
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+}
+
+h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Gears animation */
+.gears {
+    position: relative;
+    margin: 0 auto 40px auto;
+    width: 150px; 
+    height: 150px; 
+}
+
+.gear {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.gear .bar {
+    position: absolute;
+    width: 100px; /* Increased width for visibility */
+    height: 20px; /* Increased height for visibility */
+    background: #fff;
+    top: 30px; /* Adjusted top for centering */
+    left: -10px; /* Adjusted left for centering */
+    border-radius: 5px;
+}
+
+.gear .bar:nth-child(2) {
+    transform: rotate(60deg);
+}
+
+.gear .bar:nth-child(3) {
+    transform: rotate(120deg);
+}
+
+.one {
+    top: 10px;
+    left: 10px;
+    animation-name: gear-rotate;
+    animation-duration: 2s;
+}
+
+.two {
+    top: 60px; /* Adjusted for better positioning */
+    left: 70px; /* Adjusted for better positioning */
+    width: 60px;
+    height: 60px;
+    animation-name: gear-rotate-left;
+    animation-duration: 2s;
+}
+
+.two .bar {
+    width: 75px; /* Adjusted for smaller gear */
+    height: 15px; /* Adjusted for smaller gear */
+    top: 22.5px; /* Adjusted for centering */
+    left: -7.5px; /* Adjusted for centering */
+}
+
+.three {
+    top: 25px; /* Adjusted for better positioning */
+    left: 100px; /* Adjusted for better positioning */
+    width: 40px;
+    height: 40px;
+    animation-name: gear-rotate;
+    animation-duration: 1.5s;
+}
+
+.three .bar {
+    width: 50px; /* Adjusted for smaller gear */
+    height: 10px; /* Adjusted for smaller gear */
+    top: 15px; /* Adjusted for centering */
+    left: -5px; /* Adjusted for centering */
+}
+
+@keyframes gear-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes gear-rotate-left {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 80%;
+    height: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    margin: 30px auto 10px auto;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #4CAF50; /* Green color */
+    border-radius: 10px;
+    animation: progress-animation 15s linear infinite;
+}
+
+@keyframes progress-animation {
+    0% { width: 0%; }
+    20% { width: 30%; }
+    40% { width: 50%; }
+    60% { width: 75%; }
+    80% { width: 90%; }
+    100% { width: 100%; }
+}
+
+.status-text {
+    font-size: 0.9em;
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.2em;
+    }
+    p {
+        font-size: 1em;
+    }
+    .container {
+        margin: 20px;
+        padding: 30px;
+    }
+    .gears {
+        width: 120px;
+        height: 120px;
+    }
+    .gear {
+        width: 60px;
+        height: 60px;
+    }
+    .gear .bar {
+        width: 75px;
+        height: 15px;
+        top: 22.5px;
+        left: -7.5px;
+    }
+    .two {
+        top: 40px;
+        left: 50px;
+        width: 50px;
+        height: 50px;
+    }
+    .two .bar {
+        width: 60px;
+        height: 12px;
+        top: 19px;
+        left: -5px;
+    }
+    .three {
+        top: 15px;
+        left: 70px;
+        width: 30px;
+        height: 30px;
+    }
+    .three .bar {
+        width: 40px;
+        height: 8px;
+        top: 11px;
+        left: -5px;
+    }
+}

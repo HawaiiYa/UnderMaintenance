@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We'll Be Back Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-start:#4158D0;
+  --bg-middle:#C850C0;
+  --bg-end:#FFCC70;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(60deg,var(--bg-start),var(--bg-middle),var(--bg-end));
+  background-size:600% 600%;animation:gradient 16s ease infinite;overflow:hidden;color:#fff;text-align:center;
+}
+.container{max-width:620px;padding:0 1rem;}
+
+/**************************************************
+  Sleek Ring Spinner Animation (replaces gears)
+**************************************************/
+.loader{width:140px;height:140px;margin:0 auto 2rem;position:relative;}
+.loader::before,.loader::after{content:"";position:absolute;inset:0;border-radius:50%;border:10px solid rgba(255,255,255,.25);} /* static ring */
+.loader::after{border-top-color:#fff;border-right-color:#fff;border-bottom-color:transparent;border-left-color:transparent;animation:spin 1.2s linear infinite;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes gradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:600;margin-bottom:1rem;letter-spacing:1px;}
+p{font-size:clamp(1rem,2.2vw,1.25rem);opacity:.85;}
+
+/* Floating bubbles (unchanged) */
+.bubble{position:absolute;width:14px;height:14px;background:rgba(255,255,255,.1);border-radius:50%;bottom:-50px;animation:bubble 10s infinite ease-in;}
+@keyframes bubble{0%{transform:translateY(0) scale(1);opacity:.4;}100%{transform:translateY(-120vh) scale(.5);opacity:0;}}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader"></div>
+    <h1>We're Under Maintenance</h1>
+    <p>Our site is currently undergoing scheduled upgrades.<br/>Thank you for your patience. We'll be back online shortly!</p>
+  </div>
+<script>
+(function createBubbles(){
+ const colors=['rgba(255,255,255,.12)','rgba(255,255,255,.18)','rgba(255,255,255,.09)'];
+ for(let i=0;i<30;i++){
+  const bubble=document.createElement('span');
+  bubble.classList.add('bubble');
+  bubble.style.left=Math.random()*100+'%';
+  bubble.style.animationDelay=(Math.random()*8)+'s';
+  bubble.style.animationDuration=(7+Math.random()*5)+'s';
+  bubble.style.background=colors[Math.floor(Math.random()*colors.length)];
+  document.body.appendChild(bubble);
+ }
+})();
+</script>
+</body>
+</html>
