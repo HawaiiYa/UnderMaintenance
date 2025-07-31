@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .maintenance-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeInUp 1s ease-out;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .gear-container {
+            margin-bottom: 30px;
+        }
+
+        .gear-icon {
+            width: 120px;
+            height: 120px;
+            animation: rotate 8s linear infinite;
+        }
+
+        .gear-icon path,
+        .gear-icon circle {
+            stroke: #667eea;
+            stroke-width: 1.5;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease-out 0.3s both;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: slideInRight 1s ease-out 0.6s both;
+        }
+
+        .message {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            animation: slideInUp 1s ease-out 1.2s both;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            animation: progressLoad 3s ease-in-out infinite;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            animation: fadeIn 1s ease-out 1.5s both;
+        }
+
+        .contact-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .language-selector {
+            margin-top: 25px;
+            position: relative;
+            display: inline-block;
+            animation: fadeIn 1s ease-out 1.8s both;
+        }
+
+        .language-dropdown {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            color: #555;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            min-width: 180px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23666' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        .language-dropdown:hover {
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .language-dropdown:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        .particle:nth-child(1) {
+            width: 8px;
+            height: 8px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            width: 12px;
+            height: 12px;
+            left: 20%;
+            animation-delay: 2s;
+        }
+
+        .particle:nth-child(3) {
+            width: 6px;
+            height: 6px;
+            left: 30%;
+            animation-delay: 4s;
+        }
+
+        .particle:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            left: 40%;
+            animation-delay: 6s;
+        }
+
+        .particle:nth-child(5) {
+            width: 8px;
+            height: 8px;
+            left: 50%;
+            animation-delay: 8s;
+        }
+
+        .particle:nth-child(6) {
+            width: 14px;
+            height: 14px;
+            left: 60%;
+            animation-delay: 10s;
+        }
+
+        .particle:nth-child(7) {
+            width: 6px;
+            height: 6px;
+            left: 70%;
+            animation-delay: 12s;
+        }
+
+        .particle:nth-child(8) {
+            width: 10px;
+            height: 10px;
+            left: 80%;
+            animation-delay: 14s;
+        }
+
+        .particle:nth-child(9) {
+            width: 8px;
+            height: 8px;
+            left: 90%;
+            animation-delay: 16s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes progressLoad {
+            0% {
+                width: 0%;
+                transform: translateX(-100%);
+            }
+            50% {
+                width: 100%;
+                transform: translateX(0%);
+            }
+            100% {
+                width: 100%;
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 40px 30px;
+                margin: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .gear-icon {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .maintenance-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="maintenance-container">
+        <div class="gear-container">
+            <svg class="gear-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <h1>网站维护中</h1>
+        <p class="subtitle">我们正在努力改善您的体验</p>
+        
+        <p class="message">
+            我们的网站目前正在进行定期维护，以为您带来更好的功能和更高的性能。对于给您带来的任何不便，我们深表歉意，并感谢您的耐心等待。
+        </p>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+        <div class="contact-info">
+            <p>预计很快恢复在线</p>
+            <p>感谢您的理解</p>
+        </div>
+    </div>
+
+
+</body>
+</html>
