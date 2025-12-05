@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-main: #e0e0e0;
+            --accent: #00f3ff;
+            --accent-dim: rgba(0, 243, 255, 0.2);
+            --danger: #ff0055;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Roboto Mono', monospace;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Grid Background line */
+        .grid-bg {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(var(--accent-dim) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent-dim) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            opacity: 0.15;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid var(--accent);
+            background: rgba(0, 20, 20, 0.8);
+            box-shadow: 0 0 20px var(--accent-dim), inset 0 0 20px var(--accent-dim);
+            max-width: 700px;
+            width: 90%;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+            }
+
+            50% {
+                opacity: 0.5;
+                box-shadow: 0 0 5px rgba(255, 0, 85, 0.1);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+            }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--accent);
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            color: #bbb;
+        }
+
+        /* Tech Select */
+        .select-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .select-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 100%;
+            border-left: 2px solid var(--accent);
+            border-top: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+            pointer-events: none;
+        }
+
+        .select-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10px;
+            height: 100%;
+            border-right: 2px solid var(--accent);
+            border-top: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+            pointer-events: none;
+        }
+
+        select {
+            background-color: black;
+            color: var(--accent);
+            font-family: 'Orbitron', sans-serif;
+            border: none;
+            padding: 15px 40px 15px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            appearance: none;
+        }
+
+        select:hover {
+            background-color: rgba(0, 243, 255, 0.1);
+        }
+
+        .arrow {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+
+        /* Glitch effect on text change */
+        .glitch-anim {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: var(--accent);
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0)
+            }
+
+            20% {
+                transform: translate(-2px, 2px)
+            }
+
+            40% {
+                transform: translate(-2px, -2px)
+            }
+
+            60% {
+                transform: translate(2px, 2px)
+            }
+
+            80% {
+                transform: translate(2px, -2px)
+            }
+
+            100% {
+                transform: translate(0)
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-bg"></div>
+
+    <div class="container">
+        <div class="status-indicator">System Offline</div>
+
+        <h1 id="page-title">Under Maintenance</h1>
+        <p id="page-desc">System is currently being updated. Please check back soon.</p>
+
+        <div class="select-wrapper">
+            <select id="lang-selector" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+            <div class="arrow">▼</div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: { title: "Under Maintenance", text: "Our website is currently undergoing scheduled maintenance. We will be back shortly." },
+            es: { title: "Bajo Mantenimiento", text: "Nuestro sitio web está en mantenimiento programado. Volveremos pronto." },
+            fr: { title: "En Maintenance", text: "Notre site est actuellement en maintenance programmée. Nous reviendrons bientôt." },
+            de: { title: "Wartungsarbeiten", text: "Unsere Website wird derzeit gewartet. Wir sind bald zurück." },
+            it: { title: "In Manutenzione", text: "Il nostro sito è attualmente in manutenzione programmata. Torneremo presto." },
+            pt: { title: "Em Manutenção", text: "Nosso site está passando por manutenção programada. Voltaremos em breve." },
+            ru: { title: "На обслуживании", text: "Наш сайт в настоящее время находится на плановом обслуживании. Мы скоро вернемся." },
+            ja: { title: "メンテナンス中", text: "現在、定期メンテナンスを行っております。まもなく再開いたします。" },
+            ko: { title: "점검 중", text: "현재 웹사이트 정기 점검 중입니다. 곧 다시 찾아뵙겠습니다." },
+            ar: { title: "تحت الصيانة", text: "موقعنا يخضع حالياً لصيانة مجدولة. سنعود قريباً." },
+            hi: { title: "रखरखाव चल रहा है", text: "हमारी वेबसाइट पर वर्तमान में निर्धारित रखरखाव चल रहा है। हम शीघ्र ही वापस आएंगे।" },
+            sw: { title: "Inafanyiwa Marekebisho", text: "Tovuti yetu inafanyiwa marekebisho yaliyopangwa. Tutarejea hivi punde." },
+            rw: { title: "Iri gusanwa", text: "Urubuga rwacu rurimo gusanwa. Turagaruka vuba." },
+            ht: { title: "Anba Antretyen", text: "Sit entènèt nou an ap sibi antretyen pwograme kounye a. N ap tounen yon ti kras tan." },
+            nl: { title: "Onderhoud", text: "Onze website ondergaat momenteel gepland onderhoud. We zijn snel terug." },
+            sv: { title: "Under Underhåll", text: "Vår webbplats genomgår för närvarande planerat underhåll. Vi är snart tillbaka." },
+            da: { title: "Under Vedligeholdelse", text: "Vores hjemmeside gennemgår i øjeblikket planlagt vedligeholdelse. Vi er snart tilbage." },
+            no: { title: "Under Vedlikehold", text: "Nettstedet vårt er for tiden under planlagt vedlikehold. Vi er snart tilbake." },
+            fi: { title: "Huoltokatko", text: "Sivustomme on tällä hetkellä huollossa. Palaamme pian." },
+            pl: { title: "Przerwa Techniczna", text: "Nasza strona przechodzi obecnie planowaną konserwację. Wrócimy wkrótce." },
+            tr: { title: "Bakım Aşamasında", text: "Web sitemiz şu anda planlı bakım aşamasındadır. Kısa süre içinde geri döneceğiz." },
+            th: { title: "ปิดปรับปรุงชั่วคราว", text: "เว็บไซต์ของเรากำลังอยู่ระหว่างการปิดปรับปรุงตามกำหนดการ เราจะกลับมาในไม่ช้า" },
+            vi: { title: "Đang Bảo Trì", text: "Trang web của chúng tôi hiện đang được bảo trì theo lịch trình. Chúng tôi sẽ sớm quay trở lại." }
+        };
+
+        function changeLanguage(lang) {
+            const data = translations[lang] || translations['en'];
+            const titleEl = document.getElementById('page-title');
+            const descEl = document.getElementById('page-desc');
+            const container = document.querySelector('.container');
+
+            // Add glitch class for effect
+            titleEl.classList.add('glitch-anim');
+
+            setTimeout(() => {
+                titleEl.textContent = data.title;
+                descEl.textContent = data.text;
+
+                if (lang === 'ar') {
+                    document.documentElement.dir = "rtl";
+                    container.style.direction = "rtl";
+                } else {
+                    document.documentElement.dir = "ltr";
+                    container.style.direction = "ltr";
+                }
+            }, 100);
+
+            // Remove glitch after animation
+            setTimeout(() => {
+                titleEl.classList.remove('glitch-anim');
+            }, 400);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+            max-width: 600px;
+        }
+
+        /* Language selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .language-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            appearance: none;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+
+        .language-selector select:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .language-selector select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .language-selector select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        /* Gear animation */
+        .gear-container {
+            margin-bottom: 40px;
+            position: relative;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gear {
+            position: absolute;
+            border-radius: 50%;
+            border: 4px solid #e94560;
+        }
+
+        .gear-1 {
+            width: 80px;
+            height: 80px;
+            animation: rotate 4s linear infinite;
+        }
+
+        .gear-2 {
+            width: 50px;
+            height: 50px;
+            left: calc(50% + 50px);
+            top: calc(50% - 10px);
+            border-color: #0f3460;
+            background: rgba(15, 52, 96, 0.3);
+            animation: rotate-reverse 3s linear infinite;
+        }
+
+        .gear::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #e94560;
+            border-radius: 50%;
+        }
+
+        .gear-2::before {
+            width: 12px;
+            height: 12px;
+            background: #0f3460;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotate-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+
+        /* Wrench icon */
+        .icon-container {
+            margin-bottom: 30px;
+        }
+
+        .icon-container svg {
+            width: 100px;
+            height: 100px;
+            fill: #e94560;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 6px;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 60%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            border-radius: 10px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 20%; }
+            50% { width: 80%; }
+            100% { width: 20%; }
+        }
+
+        /* Status indicators */
+        .status-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .status-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #e94560;
+        }
+
+        .status-icon.active svg {
+            fill: #4ade80;
+        }
+
+        .status-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(233, 69, 96, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(233, 69, 96, 0.5); }
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .language-selector select {
+                padding: 8px 35px 8px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Language selector -->
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="ar">العربية</option>
+            <option value="hi">हिंदी</option>
+            <option value="sw">Kiswahili</option>
+            <option value="rw">Kinyarwanda</option>
+            <option value="ht">Kreyòl Ayisyen</option>
+            <option value="nl">Nederlands</option>
+            <option value="sv">Svenska</option>
+            <option value="da">Dansk</option>
+            <option value="no">Norsk</option>
+            <option value="fi">Suomi</option>
+            <option value="pl">Polski</option>
+            <option value="tr">Türkçe</option>
+            <option value="th">ไทย</option>
+            <option value="vi">Tiếng Việt</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <!-- Animated icon -->
+        <div class="icon-container">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+            </svg>
+        </div>
+
+        <h1 id="title">Under Maintenance</h1>
+        
+        <p class="subtitle" id="subtitle">
+            We're currently performing scheduled maintenance.<br>
+            We'll be back online shortly. Thank you for your patience!
+        </p>
+
+        <!-- Progress bar -->
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+
+        <!-- Status indicators -->
+        <div class="status-indicators">
+            <div class="status-item">
+                <div class="status-icon active">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <span class="status-label" id="status1">Backup</span>
+            </div>
+            <div class="status-item">
+                <div class="status-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+                </div>
+                <span class="status-label" id="status2">Update</span>
+            </div>
+            <div class="status-item">
+                <div class="status-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                </div>
+                <span class="status-label" id="status3">Restart</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" id="footer">
+        © 2025 All Rights Reserved
+    </div>
+
+    <script>
+        // Create particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Translations
+        const translations = {
+            en: {
+                title: "Under Maintenance",
+                subtitle: "We're currently performing scheduled maintenance.<br>We'll be back online shortly. Thank you for your patience!",
+                footer: "© 2025 All Rights Reserved",
+                status1: "Backup",
+                status2: "Update",
+                status3: "Restart"
+            },
+            es: {
+                title: "En Mantenimiento",
+                subtitle: "Actualmente estamos realizando mantenimiento programado.<br>Volveremos en línea pronto. ¡Gracias por su paciencia!",
+                footer: "© 2025 Todos los derechos reservados",
+                status1: "Respaldo",
+                status2: "Actualizar",
+                status3: "Reiniciar"
+            },
+            fr: {
+                title: "En Maintenance",
+                subtitle: "Nous effectuons actuellement une maintenance programmée.<br>Nous serons de retour en ligne sous peu. Merci de votre patience!",
+                footer: "© 2025 Tous droits réservés",
+                status1: "Sauvegarde",
+                status2: "Mise à jour",
+                status3: "Redémarrer"
+            },
+            de: {
+                title: "Wartungsarbeiten",
+                subtitle: "Wir führen derzeit geplante Wartungsarbeiten durch.<br>Wir sind in Kürze wieder online. Vielen Dank für Ihre Geduld!",
+                footer: "© 2025 Alle Rechte vorbehalten",
+                status1: "Sicherung",
+                status2: "Aktualisieren",
+                status3: "Neustart"
+            },
+            it: {
+                title: "In Manutenzione",
+                subtitle: "Stiamo attualmente eseguendo una manutenzione programmata.<br>Torneremo online a breve. Grazie per la pazienza!",
+                footer: "© 2025 Tutti i diritti riservati",
+                status1: "Backup",
+                status2: "Aggiornare",
+                status3: "Riavviare"
+            },
+            pt: {
+                title: "Em Manutenção",
+                subtitle: "Estamos realizando manutenção programada.<br>Voltaremos em breve. Obrigado pela paciência!",
+                footer: "© 2025 Todos os direitos reservados",
+                status1: "Backup",
+                status2: "Atualizar",
+                status3: "Reiniciar"
+            },
+            ru: {
+                title: "На обслуживании",
+                subtitle: "В настоящее время проводятся плановые работы.<br>Мы скоро вернемся. Спасибо за терпение!",
+                footer: "© 2025 Все права защищены",
+                status1: "Резервное",
+                status2: "Обновление",
+                status3: "Перезапуск"
+            },
+            ja: {
+                title: "メンテナンス中",
+                subtitle: "現在、定期メンテナンスを実施しております。<br>まもなく復旧いたします。ご理解いただきありがとうございます。",
+                footer: "© 2025 全著作権所有",
+                status1: "バックアップ",
+                status2: "更新",
+                status3: "再起動"
+            },
+            ko: {
+                title: "점검 중",
+                subtitle: "현재 정기 점검을 진행하고 있습니다.<br>곧 다시 서비스를 재개합니다. 양해해 주셔서 감사합니다!",
+                footer: "© 2025 모든 권리 보유",
+                status1: "백업",
+                status2: "업데이트",
+                status3: "재시작"
+            },
+            ar: {
+                title: "تحت الصيانة",
+                subtitle: "نقوم حاليًا بإجراء صيانة مجدولة.<br>سنعود قريبًا. شكرًا لصبركم!",
+                footer: "© 2025 جميع الحقوق محفوظة",
+                status1: "نسخ احتياطي",
+                status2: "تحديث",
+                status3: "إعادة تشغيل"
+            },
+            hi: {
+                title: "रखरखाव जारी है",
+                subtitle: "हम वर्तमान में निर्धारित रखरखाव कर रहे हैं।<br>हम जल्द ही वापस आएंगे। आपके धैर्य के लिए धन्यवाद!",
+                footer: "© 2025 सर्वाधिकार सुरक्षित",
+                status1: "बैकअप",
+                status2: "अपडेट",
+                status3: "पुनः आरंभ"
+            },
+            sw: {
+                title: "Chini ya Matengenezo",
+                subtitle: "Kwa sasa tunafanya matengenezo yaliyopangwa.<br>Tutarudi mtandaoni hivi karibuni. Asante kwa uvumilivu wako!",
+                footer: "© 2025 Haki Zote Zimehifadhiwa",
+                status1: "Hifadhi",
+                status2: "Sasisha",
+                status3: "Anzisha upya"
+            },
+            rw: {
+                title: "Mu Gusana",
+                subtitle: "Turimo gukora ibikorwa byo gusana byateganyijwe.<br>Tuzagaruka vuba. Murakoze kwihangana!",
+                footer: "© 2025 Uburenganzira Bwose Bwarabitswe",
+                status1: "Kubika",
+                status2: "Kuvugurura",
+                status3: "Gutangira"
+            },
+            ht: {
+                title: "Anba Antretyen",
+                subtitle: "Nou ap fè antretyen pwograme kounye a.<br>Nou pral retounen anliy byento. Mèsi pou pasyans ou!",
+                footer: "© 2025 Tout Dwa Rezève",
+                status1: "Sovgad",
+                status2: "Mizajou",
+                status3: "Rekòmanse"
+            },
+            nl: {
+                title: "Onderhoud",
+                subtitle: "We voeren momenteel gepland onderhoud uit.<br>We zijn binnenkort weer online. Bedankt voor uw geduld!",
+                footer: "© 2025 Alle rechten voorbehouden",
+                status1: "Back-up",
+                status2: "Bijwerken",
+                status3: "Herstarten"
+            },
+            sv: {
+                title: "Under Underhåll",
+                subtitle: "Vi utför för närvarande planerat underhåll.<br>Vi är snart tillbaka online. Tack för ditt tålamod!",
+                footer: "© 2025 Alla rättigheter förbehållna",
+                status1: "Säkerhets",
+                status2: "Uppdatera",
+                status3: "Starta om"
+            },
+            da: {
+                title: "Under Vedligeholdelse",
+                subtitle: "Vi udfører i øjeblikket planlagt vedligeholdelse.<br>Vi er snart online igen. Tak for din tålmodighed!",
+                footer: "© 2025 Alle rettigheder forbeholdes",
+                status1: "Backup",
+                status2: "Opdater",
+                status3: "Genstart"
+            },
+            no: {
+                title: "Under Vedlikehold",
+                subtitle: "Vi utfører for tiden planlagt vedlikehold.<br>Vi er snart tilbake online. Takk for tålmodigheten!",
+                footer: "© 2025 Alle rettigheter reservert",
+                status1: "Sikkerhets",
+                status2: "Oppdater",
+                status3: "Omstart"
+            },
+            fi: {
+                title: "Huollossa",
+                subtitle: "Suoritamme parhaillaan suunniteltua huoltoa.<br>Palaamme pian takaisin. Kiitos kärsivällisyydestäsi!",
+                footer: "© 2025 Kaikki oikeudet pidätetään",
+                status1: "Varmuus",
+                status2: "Päivitys",
+                status3: "Käynnistä"
+            },
+            pl: {
+                title: "W Trakcie Konserwacji",
+                subtitle: "Obecnie przeprowadzamy zaplanowaną konserwację.<br>Wkrótce wrócimy. Dziękujemy za cierpliwość!",
+                footer: "© 2025 Wszelkie prawa zastrzeżone",
+                status1: "Kopia",
+                status2: "Aktualizuj",
+                status3: "Uruchom"
+            },
+            tr: {
+                title: "Bakım Çalışması",
+                subtitle: "Şu anda planlı bakım çalışması yapıyoruz.<br>Kısa süre içinde tekrar çevrimiçi olacağız. Sabrınız için teşekkürler!",
+                footer: "© 2025 Tüm hakları saklıdır",
+                status1: "Yedekleme",
+                status2: "Güncelle",
+                status3: "Yeniden"
+            },
+            th: {
+                title: "อยู่ระหว่างการบำรุงรักษา",
+                subtitle: "ขณะนี้เรากำลังดำเนินการบำรุงรักษาตามกำหนด<br>เราจะกลับมาออนไลน์ในไม่ช้า ขอบคุณสำหรับความอดทนของคุณ!",
+                footer: "© 2025 สงวนลิขสิทธิ์",
+                status1: "สำรองข้อมูล",
+                status2: "อัปเดต",
+                status3: "รีสตาร์ท"
+            },
+            vi: {
+                title: "Đang Bảo Trì",
+                subtitle: "Chúng tôi đang thực hiện bảo trì theo lịch trình.<br>Chúng tôi sẽ sớm trở lại. Cảm ơn sự kiên nhẫn của bạn!",
+                footer: "© 2025 Đã đăng ký bản quyền",
+                status1: "Sao lưu",
+                status2: "Cập nhật",
+                status3: "Khởi động"
+            }
+        };
+
+        // Change language function
+        function changeLanguage(lang) {
+            const translation = translations[lang];
+            if (translation) {
+                document.getElementById('title').textContent = translation.title;
+                document.getElementById('subtitle').innerHTML = translation.subtitle;
+                document.getElementById('footer').textContent = translation.footer;
+                document.getElementById('status1').textContent = translation.status1;
+                document.getElementById('status2').textContent = translation.status2;
+                document.getElementById('status3').textContent = translation.status3;
+                document.documentElement.lang = lang;
+                
+                // Handle RTL for Arabic
+                if (lang === 'ar') {
+                    document.body.style.direction = 'rtl';
+                } else {
+                    document.body.style.direction = 'ltr';
+                }
+                
+                // Save preference
+                localStorage.setItem('preferredLanguage', lang);
+            }
+        }
+
+        // Initialize with saved language or default to English
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>

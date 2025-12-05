@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Under Maintenance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --text-color: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Shapes */
+        .shape {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: var(--primary-color);
+            opacity: 0.4;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: var(--secondary-color);
+            opacity: 0.3;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            top: 40%;
+            left: 40%;
+            width: 300px;
+            height: 300px;
+            background: #ec4899;
+            opacity: 0.2;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(30px, 50px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--glass-shadow);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-container {
+            margin-bottom: 2rem;
+        }
+
+        .icon-container img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* Language Selector */
+        .language-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select {
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem 3rem 1rem 1.5rem;
+            width: 100%;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        select:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Custom Scrollbar for Select Dropdown (Chrome/Safari) */
+        select option {
+            background-color: #1e1b4b;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+
+    <div class="container">
+        <div class="icon-container">
+            <!-- Using a free high-quality 3D icon from a public URL (simulated with a nice SVG or external image) -->
+            <!-- Using a generic gear/maintenance icon from a reliable CDN -->
+            <img src="https://cdn-icons-png.flaticon.com/512/9329/9329290.png" alt="Maintenance Icon">
+        </div>
+        
+        <h1 id="title">Under Maintenance</h1>
+        <p id="message">We are currently improving our website to serve you better. We'll be back shortly.</p>
+
+        <div class="language-wrapper">
+            <select id="language-selector" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+            <div class="select-arrow">
+                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer" id="footer">
+            &copy; 2025 All Rights Reserved.
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Under Maintenance",
+                message: "We are currently improving our website to serve you better. We'll be back shortly.",
+                footer: "© 2025 All Rights Reserved."
+            },
+            es: {
+                title: "En Mantenimiento",
+                message: "Actualmente estamos mejorando nuestro sitio web para servirle mejor. Volveremos en breve.",
+                footer: "© 2025 Todos los derechos reservados."
+            },
+            fr: {
+                title: "En Maintenance",
+                message: "Nous améliorons actuellement notre site web pour mieux vous servir. Nous serons de retour sous peu.",
+                footer: "© 2025 Tous droits réservés."
+            },
+            de: {
+                title: "Wartungsarbeiten",
+                message: "Wir verbessern derzeit unsere Website, um Sie besser bedienen zu können. Wir sind bald zurück.",
+                footer: "© 2025 Alle Rechte vorbehalten."
+            },
+            it: {
+                title: "In Manutenzione",
+                message: "Stiamo migliorando il nostro sito web per servirvi meglio. Torneremo a breve.",
+                footer: "© 2025 Tutti i diritti riservati."
+            },
+            pt: {
+                title: "Em Manutenção",
+                message: "Estamos melhorando nosso site para atendê-lo melhor. Voltaremos em breve.",
+                footer: "© 2025 Todos os direitos reservados."
+            },
+            ru: {
+                title: "На техническом обслуживании",
+                message: "В настоящее время мы улучшаем наш сайт, чтобы лучше обслуживать вас. Мы скоро вернемся.",
+                footer: "© 2025 Все права защищены."
+            },
+            ja: {
+                title: "メンテナンス中",
+                message: "現在、より良いサービスを提供するためにウェブサイトを改善しています。まもなく戻ります。",
+                footer: "© 2025 All Rights Reserved."
+            },
+            ko: {
+                title: "점검 중",
+                message: "더 나은 서비스를 제공하기 위해 웹사이트를 개선 중입니다. 곧 돌아오겠습니다.",
+                footer: "© 2025 All Rights Reserved."
+            },
+            ar: {
+                title: "تحت الصيانة",
+                message: "نقوم حاليًا بتحسين موقعنا لخدمتكم بشكل أفضل. سنعود قريبًا.",
+                footer: "© 2025 جميع الحقوق محفوظة."
+            },
+            hi: {
+                title: "रखरखाव चल रहा है",
+                message: "हम आपको बेहतर सेवा देने के लिए अपनी वेबसाइट में सुधार कर रहे हैं। हम जल्द ही वापस आएंगे।",
+                footer: "© 2025 सर्वाधिकार सुरक्षित।"
+            },
+            sw: {
+                title: "Inafanyiwa Marekebisho",
+                message: "Tunaendelea kuboresha tovuti yetu ili kukuhudumia vyema. Tutarejea hivi punde.",
+                footer: "© 2025 Haki zote zimehifadhiwa."
+            },
+            rw: {
+                title: "Ari gusanwa",
+                message: "Turimo kunoza urubuga rwacu kugirango tubakorere neza. Turagaruka vuba.",
+                footer: "© 2025 Uburenganzira bwose burabitswe."
+            },
+            ht: {
+                title: "Anba Antretyen",
+                message: "N ap amelyore sit entènèt nou an pou sèvi ou pi byen. N ap tounen yon ti kras tan.",
+                footer: "© 2025 Tout dwa rezève."
+            },
+            nl: {
+                title: "Onderhoud",
+                message: "We zijn momenteel onze website aan het verbeteren om u beter van dienst te zijn. We zijn zo terug.",
+                footer: "© 2025 Alle rechten voorbehouden."
+            },
+            sv: {
+                title: "Under Underhåll",
+                message: "Vi förbättrar för närvarande vår webbplats för att tjäna dig bättre. Vi är snart tillbaka.",
+                footer: "© 2025 Alla rättigheter förbehållna."
+            },
+            da: {
+                title: "Under Vedligeholdelse",
+                message: "Vi forbedrer i øjeblikket vores hjemmeside for at betjene dig bedre. Vi er snart tilbage.",
+                footer: "© 2025 Alle rettigheder forbeholdes."
+            },
+            no: {
+                title: "Under Vedlikehold",
+                message: "Vi forbedrer for tiden nettstedet vårt for å betjene deg bedre. Vi er snart tilbake.",
+                footer: "© 2025 Alle rettigheter forbeholdt."
+            },
+            fi: {
+                title: "Huoltotauko",
+                message: "Parannamme parhaillaan verkkosivustoamme palvellaksemme sinua paremmin. Palaamme pian.",
+                footer: "© 2025 Kaikki oikeudet pidätetään."
+            },
+            pl: {
+                title: "Przerwa Techniczna",
+                message: "Obecnie ulepszamy naszą stronę internetową, aby lepiej Ci służyć. Wkrótce wrócimy.",
+                footer: "© 2025 Wszelkie prawa zastrzeżone."
+            },
+            tr: {
+                title: "Bakım Aşamasında",
+                message: "Size daha iyi hizmet verebilmek için web sitemizi geliştiriyoruz. Kısa süre içinde döneceğiz.",
+                footer: "© 2025 Tüm Hakları Saklıdır."
+            },
+            th: {
+                title: "ปิดปรับปรุง",
+                message: "เรากำลังปรับปรุงเว็บไซต์เพื่อให้บริการคุณได้ดียิ่งขึ้น เราจะกลับมาในไม่ช้า",
+                footer: "© 2025 สงวนลิขสิทธิ์"
+            },
+            vi: {
+                title: "Đang Bảo Trì",
+                message: "Chúng tôi đang nâng cấp trang web để phục vụ bạn tốt hơn. Chúng tôi sẽ quay lại ngay.",
+                footer: "© 2025 Mọi quyền được bảo lưu."
+            }
+        };
+
+        function changeLanguage() {
+            const selector = document.getElementById('language-selector');
+            const lang = selector.value;
+            const content = translations[lang];
+            
+            const titleElement = document.getElementById('title');
+            const messageElement = document.getElementById('message');
+            const footerElement = document.getElementById('footer');
+            const body = document.body;
+
+            // Fade out text
+            titleElement.style.opacity = 0;
+            messageElement.style.opacity = 0;
+            footerElement.style.opacity = 0;
+
+            setTimeout(() => {
+                // Update text
+                titleElement.textContent = content.title;
+                messageElement.textContent = content.message;
+                footerElement.textContent = content.footer;
+
+                // Handle RTL for Arabic
+                if (lang === 'ar') {
+                    body.style.direction = 'rtl';
+                    selector.style.padding = '1rem 1.5rem 1rem 3rem'; // Adjust padding for RTL
+                    document.querySelector('.select-arrow').style.right = 'auto';
+                    document.querySelector('.select-arrow').style.left = '1.5rem';
+                } else {
+                    body.style.direction = 'ltr';
+                    selector.style.padding = '1rem 3rem 1rem 1.5rem';
+                    document.querySelector('.select-arrow').style.right = '1.5rem';
+                    document.querySelector('.select-arrow').style.left = 'auto';
+                }
+
+                // Fade in text
+                titleElement.style.opacity = 1;
+                messageElement.style.opacity = 1;
+                footerElement.style.opacity = 1;
+            }, 300);
+        }
+
+        // Add transition styles dynamically
+        document.getElementById('title').style.transition = 'opacity 0.3s ease';
+        document.getElementById('message').style.transition = 'opacity 0.3s ease';
+        document.getElementById('footer').style.transition = 'opacity 0.3s ease';
+    </script>
+</body>
+</html>

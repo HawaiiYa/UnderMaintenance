@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent: #3b82f6;
+            --bg-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop'); 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        /* Overlay to darken background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.7);
+            z-index: 1;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 3rem;
+            
+            /* Glassmorphism */
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            
+            /* Animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-container {
+            margin-bottom: 2rem;
+            display: inline-flex;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .lang-select-wrapper {
+            position: relative;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        select {
+            appearance: none;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.75rem 2.5rem 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        select:hover {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Custom Arrow */
+        .select-arrow {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            width: 16px;
+            height: 16px;
+            fill: var(--text-secondary);
+        }
+
+        /* RTL Support */
+        body[dir="rtl"] {
+            direction: rtl;
+        }
+        
+        body[dir="rtl"] .select-arrow {
+            right: auto;
+            left: 1rem;
+        }
+        
+        body[dir="rtl"] select {
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 640px) {
+            main {
+                width: 95%;
+                padding: 2rem 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="icon-container">
+            <!-- Gear Icon SVG -->
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </div>
+
+        <h1 id="title">Under Maintenance</h1>
+        <p id="description">We are currently performing scheduled maintenance to improve your experience. We will be back shortly.</p>
+
+        <div class="lang-select-wrapper">
+            <select id="language-selector" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+            <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+        </div>
+    </main>
+
+    <script>
+        const translations = {
+            en: { title: "Under Maintenance", desc: "We are currently performing scheduled maintenance to improve your experience. We will be back shortly." },
+            es: { title: "En Mantenimiento", desc: "Actualmente estamos realizando mantenimiento programado para mejorar su experiencia. Volveremos en breve." },
+            fr: { title: "En Maintenance", desc: "Nous effectuons actuellement une maintenance programmée pour améliorer votre expérience. Nous serons de retour sous peu." },
+            de: { title: "Wartungsarbeiten", desc: "Wir führen derzeit geplante Wartungsarbeiten durch, um Ihr Erlebnis zu verbessern. Wir sind bald zurück." },
+            it: { title: "In Manutenzione", desc: "Stiamo effettuando una manutenzione programmata per migliorare la tua esperienza. Torneremo a breve." },
+            pt: { title: "Em Manutenção", desc: "Estamos realizando manutenção programada para melhorar sua experiência. Voltaremos em breve." },
+            ru: { title: "Техническое обслуживание", desc: "Мы проводим плановое техническое обслуживание для улучшения работы сайта. Мы скоро вернемся." },
+            ja: { title: "メンテナンス中", desc: "現在、サービスの向上のため計画的なメンテナンスを行っております。まもなく再開いたします。" },
+            ko: { title: "점검 중", desc: "더 나은 서비스를 위해 현재 정기 점검을 진행 중입니다. 곧 다시 찾아뵙겠습니다." },
+            ar: { title: "تحت الصيانة", desc: "نقوم حاليًا بإجراء صيانة مجدولة لتحسين تجربتك. سنعود قريبا." },
+            hi: { title: "رखरखाव चल रहा है", desc: "हम आपके अनुभव को बेहतर बनाने के लिए वर्तमान में निर्धारित रखरखाव कर रहे हैं। हम शीघ्र ही वापस आएंगे।" },
+            sw: { title: "Inafanyiwa Marekebisho", desc: "Tunaendesha marekebisho yaliyopangwa ili kuboresha hali yako. Tutarejea hivi punde." },
+            rw: { title: "Turi gukora ivugurura", desc: "Turimo gukora ivugurura riteganijwe kugirango tunoze serivisi zacu. Turagaruka mu kanya gato." },
+            ht: { title: "Anba Antretyen", desc: "N ap fè antretyen ki te pwograme pou amelyore eksperyans ou. N ap tounen yon ti kras." },
+            nl: { title: "Onderhoud bezig", desc: "We voeren momenteel gepland onderhoud uit om uw ervaring te verbeteren. We zijn zo terug." },
+            sv: { title: "Underhåll pågår", desc: "Vi utför för närvarande planerat underhåll för att förbättra din upplevelse. Vi är snart tillbaka." },
+            da: { title: "Under vedligeholdelse", desc: "Vi udfører i øjeblikket planlagt vedligeholdelse for at forbedre din oplevelse. Vi vender tilbage snart." },
+            no: { title: "Vedlikehold pågår", desc: "Vi utfører for tiden planlagt vedlikehold for å forbedre opplevelsen din. Vi er snart tilbake." },
+            fi: { title: "Huoltokatko", desc: "Suoritamme parhaillaan suunniteltua huoltoa parantaaksemme palveluamme. Palaamme pian." },
+            pl: { title: "Przerwa techniczna", desc: "Obecnie przeprowadzamy planowane prace konserwacyjne, aby poprawić jakość naszych usług. Wkrótce wracamy." },
+            tr: { title: "Bakım Aşamasında", desc: "Deneyiminizi geliştirmek için şu anda planlı bakım yapıyoruz. Kısa süre içinde döneceğiz." },
+            th: { title: "ปิดปรับปรุง", desc: "เรากำลังดำเนินการบำรุงรักษาตามกำหนดการเพื่อปรับปรุงประสบการณ์ของคุณ เราจะกลับมาในไม่ช้า" },
+            vi: { title: "Đang Bảo Trì", desc: "Chúng tôi đang thực hiện bảo trì định kỳ để cải thiện trải nghiệm của bạn. Chúng tôi sẽ quay lại ngay." }
+        };
+
+        function changeLanguage(lang) {
+            const title = document.getElementById('title');
+            const desc = document.getElementById('description');
+            
+            // Fade out
+            title.style.opacity = '0';
+            desc.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Update Content
+                if (translations[lang]) {
+                    title.textContent = translations[lang].title;
+                    desc.textContent = translations[lang].desc;
+                }
+                
+                // Handle RTL
+                if (lang === 'ar') {
+                    document.body.setAttribute('dir', 'rtl');
+                } else {
+                    document.body.setAttribute('dir', 'ltr');
+                }
+
+                // Fade in
+                title.style.opacity = '1';
+                desc.style.opacity = '1';
+            }, 200);
+        }
+
+        // Add transitions via JS to Title and Desc for smoother switching if not already handled by CSS
+        document.getElementById('title').style.transition = 'opacity 0.2s ease';
+        document.getElementById('description').style.transition = 'opacity 0.2s ease';
+    </script>
+</body>
+</html>

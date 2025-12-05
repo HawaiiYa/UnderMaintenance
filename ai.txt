@@ -1,0 +1,32 @@
+製作好看的單一頁維護中頁面index.html
+需要可以切換多語系 預設英文
+要有以下這些語言
+
+<option value="en">English</option>
+<option value="es">Español</option>
+<option value="fr">Français</option>
+<option value="de">Deutsch</option>
+<option value="it">Italiano</option>
+<option value="pt">Português</option>
+<option value="ru">Русский</option>
+<option value="ja">日本語</option>
+<option value="ko">한국어</option>
+<option value="ar">العربية</option>
+<option value="hi">हिंदी</option>
+<option value="sw">Kiswahili</option>
+<option value="rw">Kinyarwanda</option>
+<option value="ht">Kreyòl Ayisyen</option>
+<option value="nl">Nederlands</option>
+<option value="sv">Svenska</option>
+<option value="da">Dansk</option>
+<option value="no">Norsk</option>
+<option value="fi">Suomi</option>
+<option value="pl">Polski</option>
+<option value="tr">Türkçe</option>
+<option value="th">ไทย</option>
+<option value="vi">Tiếng Việt</option>
+
+不要有其他檔案，全都寫在單一頁index.html中，如果要用圖片素材，使用公共url的免費素材
+不要有任何外連link也不要有email或是聯絡方式
+
+請幫我製作截然不同的三種風格的單一頁式維護頁面

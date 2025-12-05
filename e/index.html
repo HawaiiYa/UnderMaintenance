@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Maintenance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Courier New', monospace;
+            background: #0a0a0f;
+            color: #00ff88;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            max-width: 700px;
+            margin: 20px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 136, 0.3),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff88, #00ccff, #ff00ff, #00ff88);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: 6px;
+            animation: borderGlow 3s ease infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .language-selector select {
+            padding: 8px 15px;
+            border: 1px solid #00ff88;
+            background: transparent;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector select:hover {
+            background: #00ff88;
+            color: #0a0a0f;
+        }
+
+        .language-selector select option {
+            background: #0a0a0f;
+            color: #00ff88;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27ca40; }
+
+        .terminal-title {
+            margin-left: auto;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .server-icon {
+            margin: 30px auto;
+            width: 100px;
+            height: 80px;
+            position: relative;
+        }
+
+        .server-box {
+            width: 100%;
+            height: 25px;
+            background: linear-gradient(180deg, #1a1a2e, #0f0f1a);
+            border: 1px solid #00ff88;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .server-light {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .light-blink {
+            background: #00ff88;
+            animation: blink 1s infinite;
+        }
+
+        .light-off {
+            background: #333;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; box-shadow: 0 0 10px #00ff88; }
+            51%, 100% { opacity: 0.3; box-shadow: none; }
+        }
+
+        .server-lines {
+            margin-left: auto;
+            display: flex;
+            gap: 3px;
+        }
+
+        .server-line {
+            width: 15px;
+            height: 3px;
+            background: #333;
+            border-radius: 1px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #00ff88;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3s steps(40) infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { width: 0; }
+            50%, 90% { width: 100%; }
+        }
+
+        .message {
+            color: #888;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin: 25px 0;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #333;
+            border-radius: 3px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .code-line {
+            margin: 8px 0;
+            display: flex;
+        }
+
+        .code-prefix {
+            color: #00ccff;
+            margin-right: 10px;
+        }
+
+        .code-text {
+            color: #00ff88;
+        }
+
+        .code-loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .progress-bar-container {
+            background: #1a1a2e;
+            border: 1px solid #333;
+            border-radius: 3px;
+            height: 25px;
+            overflow: hidden;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00ccff);
+            width: 0%;
+            animation: progress 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            color: #fff;
+            z-index: 1;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border: 1px solid #ffbd2e;
+            color: #ffbd2e;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: statusPulse 2s infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 189, 46, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 189, 46, 0.6); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: particleFloat 10s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-lines"></div>
+    
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="language-selector">
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+        </div>
+
+        <div class="terminal-header">
+            <div class="terminal-dot dot-red"></div>
+            <div class="terminal-dot dot-yellow"></div>
+            <div class="terminal-dot dot-green"></div>
+            <span class="terminal-title">system_maintenance.exe</span>
+        </div>
+
+        <div class="server-icon">
+            <div class="server-box">
+                <div class="server-light light-blink"></div>
+                <div class="server-light light-off"></div>
+                <div class="server-lines">
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                </div>
+            </div>
+            <div class="server-box">
+                <div class="server-light light-blink"></div>
+                <div class="server-light light-blink"></div>
+                <div class="server-lines">
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                </div>
+            </div>
+            <div class="server-box">
+                <div class="server-light light-off"></div>
+                <div class="server-light light-blink"></div>
+                <div class="server-lines">
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                    <div class="server-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <h1 id="title">System Maintenance</h1>
+        <p class="message" id="message">Our systems are currently undergoing scheduled maintenance. All services will be restored shortly.</p>
+
+        <div class="code-block">
+            <div class="code-line">
+                <span class="code-prefix">&gt;</span>
+                <span class="code-text" id="code1">Initializing maintenance protocol...</span>
+            </div>
+            <div class="code-line">
+                <span class="code-prefix">&gt;</span>
+                <span class="code-text" id="code2">Updating system components...</span>
+            </div>
+            <div class="code-line">
+                <span class="code-prefix">&gt;</span>
+                <span class="code-text code-loading" id="code3">Running diagnostics...</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar"></div>
+            <span class="progress-text" id="progressText">Processing...</span>
+        </div>
+
+        <div class="status-badge" id="status">Maintenance in Progress</div>
+    </div>
+
+    <script>
+        // Create particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        const translations = {
+            en: {
+                title: "System Maintenance",
+                message: "Our systems are currently undergoing scheduled maintenance. All services will be restored shortly.",
+                code1: "Initializing maintenance protocol...",
+                code2: "Updating system components...",
+                code3: "Running diagnostics...",
+                progress: "Processing...",
+                status: "Maintenance in Progress"
+            },
+            es: {
+                title: "Mantenimiento del Sistema",
+                message: "Nuestros sistemas están actualmente en mantenimiento programado. Todos los servicios se restaurarán en breve.",
+                code1: "Inicializando protocolo de mantenimiento...",
+                code2: "Actualizando componentes del sistema...",
+                code3: "Ejecutando diagnósticos...",
+                progress: "Procesando...",
+                status: "Mantenimiento en Progreso"
+            },
+            fr: {
+                title: "Maintenance Système",
+                message: "Nos systèmes sont actuellement en maintenance programmée. Tous les services seront rétablis sous peu.",
+                code1: "Initialisation du protocole de maintenance...",
+                code2: "Mise à jour des composants système...",
+                code3: "Exécution des diagnostics...",
+                progress: "Traitement...",
+                status: "Maintenance en Cours"
+            },
+            de: {
+                title: "Systemwartung",
+                message: "Unsere Systeme werden derzeit planmäßig gewartet. Alle Dienste werden in Kürze wiederhergestellt.",
+                code1: "Wartungsprotokoll wird initialisiert...",
+                code2: "Systemkomponenten werden aktualisiert...",
+                code3: "Diagnose wird ausgeführt...",
+                progress: "Verarbeitung...",
+                status: "Wartung läuft"
+            },
+            it: {
+                title: "Manutenzione Sistema",
+                message: "I nostri sistemi sono attualmente in manutenzione programmata. Tutti i servizi saranno ripristinati a breve.",
+                code1: "Inizializzazione protocollo di manutenzione...",
+                code2: "Aggiornamento componenti di sistema...",
+                code3: "Esecuzione diagnostica...",
+                progress: "Elaborazione...",
+                status: "Manutenzione in Corso"
+            },
+            pt: {
+                title: "Manutenção do Sistema",
+                message: "Nossos sistemas estão atualmente em manutenção programada. Todos os serviços serão restaurados em breve.",
+                code1: "Inicializando protocolo de manutenção...",
+                code2: "Atualizando componentes do sistema...",
+                code3: "Executando diagnósticos...",
+                progress: "Processando...",
+                status: "Manutenção em Andamento"
+            },
+            ru: {
+                title: "Техническое Обслуживание",
+                message: "Наши системы в настоящее время проходят плановое техническое обслуживание. Все сервисы будут восстановлены в ближайшее время.",
+                code1: "Инициализация протокола обслуживания...",
+                code2: "Обновление системных компонентов...",
+                code3: "Выполнение диагностики...",
+                progress: "Обработка...",
+                status: "Обслуживание в процессе"
+            },
+            ja: {
+                title: "システムメンテナンス",
+                message: "現在、定期メンテナンスを実施しております。すべてのサービスは間もなく復旧いたします。",
+                code1: "メンテナンスプロトコル初期化中...",
+                code2: "システムコンポーネント更新中...",
+                code3: "診断実行中...",
+                progress: "処理中...",
+                status: "メンテナンス進行中"
+            },
+            ko: {
+                title: "시스템 점검",
+                message: "현재 정기 점검이 진행 중입니다. 모든 서비스는 곧 복구됩니다.",
+                code1: "점검 프로토콜 초기화 중...",
+                code2: "시스템 구성 요소 업데이트 중...",
+                code3: "진단 실행 중...",
+                progress: "처리 중...",
+                status: "점검 진행 중"
+            },
+            ar: {
+                title: "صيانة النظام",
+                message: "أنظمتنا تخضع حاليًا لصيانة مجدولة. سيتم استعادة جميع الخدمات قريبًا.",
+                code1: "جاري تهيئة بروتوكول الصيانة...",
+                code2: "جاري تحديث مكونات النظام...",
+                code3: "جاري تشغيل التشخيصات...",
+                progress: "جاري المعالجة...",
+                status: "الصيانة قيد التنفيذ"
+            },
+            hi: {
+                title: "सिस्टम रखरखाव",
+                message: "हमारे सिस्टम वर्तमान में निर्धारित रखरखाव से गुजर रहे हैं। सभी सेवाएं जल्द ही बहाल हो जाएंगी।",
+                code1: "रखरखाव प्रोटोकॉल प्रारंभ हो रहा है...",
+                code2: "सिस्टम घटक अपडेट हो रहे हैं...",
+                code3: "डायग्नोस्टिक्स चल रहा है...",
+                progress: "प्रोसेसिंग...",
+                status: "रखरखाव जारी है"
+            },
+            sw: {
+                title: "Matengenezo ya Mfumo",
+                message: "Mifumo yetu inafanyiwa matengenezo yaliyopangwa. Huduma zote zitarejeshwa hivi karibuni.",
+                code1: "Kuanzisha itifaki ya matengenezo...",
+                code2: "Kusasisha vipengele vya mfumo...",
+                code3: "Kuendesha uchunguzi...",
+                progress: "Inachakata...",
+                status: "Matengenezo Yanaendelea"
+            },
+            rw: {
+                title: "Gusana Sisitemu",
+                message: "Sisitemu zacu zirimo gusanwa nk'uko byari biteguwe. Serivisi zose zizagaruka vuba.",
+                code1: "Gutangira gahunda yo gusana...",
+                code2: "Gushyira ibice bya sisitemu...",
+                code3: "Gukora isuzuma...",
+                progress: "Birimo gutunganywa...",
+                status: "Gusana Biracyakomeza"
+            },
+            ht: {
+                title: "Antretyen Sistèm",
+                message: "Sistèm nou yo ap fè antretyen pwograme kounye a. Tout sèvis yo pral retabli byento.",
+                code1: "Inisyalize pwotokòl antretyen...",
+                code2: "Mete ajou konpozan sistèm yo...",
+                code3: "Ap kouri dyagnostik...",
+                progress: "Ap trete...",
+                status: "Antretyen an Pwogrè"
+            },
+            nl: {
+                title: "Systeemonderhoud",
+                message: "Onze systemen ondergaan momenteel gepland onderhoud. Alle diensten worden binnenkort hersteld.",
+                code1: "Onderhoudsprotocol initialiseren...",
+                code2: "Systeemcomponenten bijwerken...",
+                code3: "Diagnostiek uitvoeren...",
+                progress: "Verwerken...",
+                status: "Onderhoud Bezig"
+            },
+            sv: {
+                title: "Systemunderhåll",
+                message: "Våra system genomgår för närvarande schemalagt underhåll. Alla tjänster kommer att återställas inom kort.",
+                code1: "Initierar underhållsprotokoll...",
+                code2: "Uppdaterar systemkomponenter...",
+                code3: "Kör diagnostik...",
+                progress: "Bearbetar...",
+                status: "Underhåll Pågår"
+            },
+            da: {
+                title: "Systemvedligeholdelse",
+                message: "Vores systemer gennemgår i øjeblikket planlagt vedligeholdelse. Alle tjenester vil blive genoprettet snart.",
+                code1: "Initialiserer vedligeholdelsesprotokol...",
+                code2: "Opdaterer systemkomponenter...",
+                code3: "Kører diagnostik...",
+                progress: "Behandler...",
+                status: "Vedligeholdelse i Gang"
+            },
+            no: {
+                title: "Systemvedlikehold",
+                message: "Våre systemer gjennomgår for tiden planlagt vedlikehold. Alle tjenester vil bli gjenopprettet snart.",
+                code1: "Initialiserer vedlikeholdsprotokoll...",
+                code2: "Oppdaterer systemkomponenter...",
+                code3: "Kjører diagnostikk...",
+                progress: "Behandler...",
+                status: "Vedlikehold Pågår"
+            },
+            fi: {
+                title: "Järjestelmän Huolto",
+                message: "Järjestelmämme ovat parhaillaan suunnitellussa huollossa. Kaikki palvelut palautetaan pian.",
+                code1: "Alustetaan huoltoprotokollaa...",
+                code2: "Päivitetään järjestelmäkomponentteja...",
+                code3: "Suoritetaan diagnostiikkaa...",
+                progress: "Käsitellään...",
+                status: "Huolto Käynnissä"
+            },
+            pl: {
+                title: "Konserwacja Systemu",
+                message: "Nasze systemy przechodzą obecnie zaplanowaną konserwację. Wszystkie usługi zostaną wkrótce przywrócone.",
+                code1: "Inicjalizacja protokołu konserwacji...",
+                code2: "Aktualizacja komponentów systemu...",
+                code3: "Uruchamianie diagnostyki...",
+                progress: "Przetwarzanie...",
+                status: "Konserwacja w Toku"
+            },
+            tr: {
+                title: "Sistem Bakımı",
+                message: "Sistemlerimiz şu anda planlı bakımdan geçmektedir. Tüm hizmetler kısa süre içinde geri yüklenecektir.",
+                code1: "Bakım protokolü başlatılıyor...",
+                code2: "Sistem bileşenleri güncelleniyor...",
+                code3: "Tanılama çalıştırılıyor...",
+                progress: "İşleniyor...",
+                status: "Bakım Devam Ediyor"
+            },
+            th: {
+                title: "การบำรุงรักษาระบบ",
+                message: "ระบบของเรากำลังอยู่ในระหว่างการบำรุงรักษาตามกำหนด บริการทั้งหมดจะกลับมาใช้งานได้ในไม่ช้า",
+                code1: "กำลังเริ่มต้นโปรโตคอลการบำรุงรักษา...",
+                code2: "กำลังอัปเดตส่วนประกอบของระบบ...",
+                code3: "กำลังเรียกใช้การวินิจฉัย...",
+                progress: "กำลังประมวลผล...",
+                status: "การบำรุงรักษากำลังดำเนินการ"
+            },
+            vi: {
+                title: "Bảo Trì Hệ Thống",
+                message: "Hệ thống của chúng tôi hiện đang được bảo trì theo lịch trình. Tất cả dịch vụ sẽ được khôi phục trong thời gian ngắn.",
+                code1: "Đang khởi tạo giao thức bảo trì...",
+                code2: "Đang cập nhật các thành phần hệ thống...",
+                code3: "Đang chạy chẩn đoán...",
+                progress: "Đang xử lý...",
+                status: "Đang Bảo Trì"
+            }
+        };
+
+        function changeLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('message').textContent = t.message;
+            document.getElementById('code1').textContent = t.code1;
+            document.getElementById('code2').textContent = t.code2;
+            document.getElementById('code3').textContent = t.code3;
+            document.getElementById('progressText').textContent = t.progress;
+            document.getElementById('status').textContent = t.status;
+            document.documentElement.lang = lang;
+            
+            if (lang === 'ar') {
+                document.body.style.direction = 'rtl';
+            } else {
+                document.body.style.direction = 'ltr';
+            }
+        }
+
+        document.getElementById('languageSelect').value = 'en';
+    </script>
+</body>
+</html>

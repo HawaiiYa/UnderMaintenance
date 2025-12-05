@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Maintenance</title>
+    <style>
+        :root {
+            --primary-bg: #f0f2f5;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-color: #333;
+            --text-secondary: #666;
+            --accent-1: #ff9a9e;
+            --accent-2: #fad0c4;
+            --accent-3: #a18cd1;
+            --accent-4: #fbc2eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--primary-bg);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: absolute;
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.8;
+            animation: float 10s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            right: -50px;
+            background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            animation-delay: -2s;
+        }
+
+        .blob-3 {
+            width: 200px;
+            height: 200px;
+            bottom: 20%;
+            left: 20%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+        }
+
+        /* Glassmorphism Card */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 3rem;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .icon-wrapper svg {
+            width: 40px;
+            height: 40px;
+            color: #6c5ce7;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        /* Select styling */
+        .lang-select-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        select {
+            appearance: none;
+            background-color: white;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 12px 40px 12px 20px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            border-color: #6c5ce7;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+        <div class="icon-wrapper">
+            <!-- Gear Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </div>
+
+        <h1 id="page-title">Under Maintenance</h1>
+        <p id="page-desc">Our website is currently undergoing scheduled maintenance. We will be back shortly.</p>
+
+        <div class="lang-select-wrapper">
+            <select id="lang-selector" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+            <div class="select-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: { title: "Under Maintenance", text: "Our website is currently undergoing scheduled maintenance. We will be back shortly." },
+            es: { title: "Bajo Mantenimiento", text: "Nuestro sitio web está en mantenimiento programado. Volveremos pronto." },
+            fr: { title: "En Maintenance", text: "Notre site est actuellement en maintenance programmée. Nous reviendrons bientôt." },
+            de: { title: "Wartungsarbeiten", text: "Unsere Website wird derzeit gewartet. Wir sind bald zurück." },
+            it: { title: "In Manutenzione", text: "Il nostro sito è attualmente in manutenzione programmata. Torneremo presto." },
+            pt: { title: "Em Manutenção", text: "Nosso site está passando por manutenção programada. Voltaremos em breve." },
+            ru: { title: "На обслуживании", text: "Наш сайт в настоящее время находится на плановом обслуживании. Мы скоро вернемся." },
+            ja: { title: "メンテナンス中", text: "現在、定期メンテナンスを行っております。まもなく再開いたします。" },
+            ko: { title: "점검 중", text: "현재 웹사이트 정기 점검 중입니다. 곧 다시 찾아뵙겠습니다." },
+            ar: { title: "تحت الصيانة", text: "موقعنا يخضع حالياً لصيانة مجدولة. سنعود قريباً." },
+            hi: { title: "रखरखाव चल रहा है", text: "हमारी वेबसाइट पर वर्तमान में निर्धारित रखरखाव चल रहा है। हम शीघ्र ही वापस आएंगे।" },
+            sw: { title: "Inafanyiwa Marekebisho", text: "Tovuti yetu inafanyiwa marekebisho yaliyopangwa. Tutarejea hivi punde." },
+            rw: { title: "Iri gusanwa", text: "Urubuga rwacu rurimo gusanwa. Turagaruka vuba." },
+            ht: { title: "Anba Antretyen", text: "Sit entènèt nou an ap sibi antretyen pwograme kounye a. N ap tounen yon ti kras tan." },
+            nl: { title: "Onderhoud", text: "Onze website ondergaat momenteel gepland onderhoud. We zijn snel terug." },
+            sv: { title: "Under Underhåll", text: "Vår webbplats genomgår för närvarande planerat underhåll. Vi är snart tillbaka." },
+            da: { title: "Under Vedligeholdelse", text: "Vores hjemmeside gennemgår i øjeblikket planlagt vedligeholdelse. Vi er snart tilbage." },
+            no: { title: "Under Vedlikehold", text: "Nettstedet vårt er for tiden under planlagt vedlikehold. Vi er snart tilbake." },
+            fi: { title: "Huoltokatko", text: "Sivustomme on tällä hetkellä huollossa. Palaamme pian." },
+            pl: { title: "Przerwa Techniczna", text: "Nasza strona przechodzi obecnie planowaną konserwację. Wrócimy wkrótce." },
+            tr: { title: "Bakım Aşamasında", text: "Web sitemiz şu anda planlı bakım aşamasındadır. Kısa süre içinde geri döneceğiz." },
+            th: { title: "ปิดปรับปรุงชั่วคราว", text: "เว็บไซต์ของเรากำลังอยู่ระหว่างการปิดปรับปรุงตามกำหนดการ เราจะกลับมาในไม่ช้า" },
+            vi: { title: "Đang Bảo Trì", text: "Trang web của chúng tôi hiện đang được bảo trì theo lịch trình. Chúng tôi sẽ sớm quay trở lại." }
+        };
+
+        function changeLanguage(lang) {
+            const data = translations[lang] || translations['en'];
+
+            // Fade out
+            const titleEl = document.getElementById('page-title');
+            const descEl = document.getElementById('page-desc');
+            const container = document.querySelector('.container');
+
+            titleEl.style.opacity = 0;
+            descEl.style.opacity = 0;
+
+            setTimeout(() => {
+                titleEl.innerText = data.title;
+                descEl.innerText = data.text;
+
+                // RTL support for Arabic
+                if (lang === 'ar') {
+                    document.documentElement.dir = "rtl";
+                    container.style.direction = "rtl";
+                } else {
+                    document.documentElement.dir = "ltr";
+                    container.style.direction = "ltr";
+                }
+
+                // Fade in
+                titleEl.style.opacity = 1;
+                descEl.style.opacity = 1;
+            }, 200);
+        }
+
+        // Add transition styles dynamically
+        document.getElementById('page-title').style.transition = 'opacity 0.2s ease';
+        document.getElementById('page-desc').style.transition = 'opacity 0.2s ease';
+    </script>
+</body>
+
+</html>

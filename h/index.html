@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Maintenance</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --text-primary: #1a1a1a;
+            --text-secondary: #717171;
+            --accent: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Lato', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            transition: background-color 0.5s ease;
+        }
+
+        .main-content {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 3rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            opacity: 0;
+            animation: fadeInUl 0.8s ease-out forwards;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-weight: 300;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInUl 0.8s ease-out 0.3s forwards;
+        }
+
+        .divider {
+            width: 1px;
+            height: 60px;
+            background-color: var(--text-secondary);
+            margin: 0 auto 3rem;
+            opacity: 0.3;
+        }
+
+        /* Minimalist Select */
+        .select-container {
+            display: inline-block;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUl 0.8s ease-out 0.6s forwards;
+        }
+
+        select {
+            appearance: none;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--text-secondary);
+            padding: 10px 30px 10px 10px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-transform: uppercase;
+            outline: none;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        select:hover,
+        select:focus {
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        @keyframes fadeInUl {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-content">
+        <div class="logo-placeholder">M</div>
+
+        <h1 id="page-title">Under Maintenance</h1>
+        <div class="divider"></div>
+        <p id="page-desc">Our website is currently undergoing scheduled maintenance. We will be back shortly.</p>
+
+        <div class="select-container">
+            <select id="lang-selector" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Português</option>
+                <option value="ru">Русский</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="ar">العربية</option>
+                <option value="hi">हिंदी</option>
+                <option value="sw">Kiswahili</option>
+                <option value="rw">Kinyarwanda</option>
+                <option value="ht">Kreyòl Ayisyen</option>
+                <option value="nl">Nederlands</option>
+                <option value="sv">Svenska</option>
+                <option value="da">Dansk</option>
+                <option value="no">Norsk</option>
+                <option value="fi">Suomi</option>
+                <option value="pl">Polski</option>
+                <option value="tr">Türkçe</option>
+                <option value="th">ไทย</option>
+                <option value="vi">Tiếng Việt</option>
+            </select>
+            <span class="select-arrow">▼</span>
+        </div>
+    </div>
+
+    <script>
+        const translations = {
+            en: { title: "Under Maintenance", text: "Our website is currently undergoing scheduled maintenance. We will be back shortly." },
+            es: { title: "Bajo Mantenimiento", text: "Nuestro sitio web está en mantenimiento programado. Volveremos pronto." },
+            fr: { title: "En Maintenance", text: "Notre site est actuellement en maintenance programmée. Nous reviendrons bientôt." },
+            de: { title: "Wartungsarbeiten", text: "Unsere Website wird derzeit gewartet. Wir sind bald zurück." },
+            it: { title: "In Manutenzione", text: "Il nostro sito è attualmente in manutenzione programmata. Torneremo presto." },
+            pt: { title: "Em Manutenção", text: "Nosso site está passando por manutenção programada. Voltaremos em breve." },
+            ru: { title: "На обслуживании", text: "Наш сайт в настоящее время находится на плановом обслуживании. Мы скоро вернемся." },
+            ja: { title: "メンテナンス中", text: "現在、定期メンテナンスを行っております。まもなく再開いたします。" },
+            ko: { title: "점검 중", text: "현재 웹사이트 정기 점검 중입니다. 곧 다시 찾아뵙겠습니다." },
+            ar: { title: "تحت الصيانة", text: "موقعنا يخضع حالياً لصيانة مجدولة. سنعود قريباً." },
+            hi: { title: "रखरखाव चल रहा है", text: "हमारी वेबसाइट पर वर्तमान में निर्धारित रखरखाव चल रहा है। हम शीघ्र ही वापस आएंगे।" },
+            sw: { title: "Inafanyiwa Marekebisho", text: "Tovuti yetu inafanyiwa marekebisho yaliyopangwa. Tutarejea hivi punde." },
+            rw: { title: "Iri gusanwa", text: "Urubuga rwacu rurimo gusanwa. Turagaruka vuba." },
+            ht: { title: "Anba Antretyen", text: "Sit entènèt nou an ap sibi antretyen pwograme kounye a. N ap tounen yon ti kras tan." },
+            nl: { title: "Onderhoud", text: "Onze website ondergaat momenteel gepland onderhoud. We zijn snel terug." },
+            sv: { title: "Under Underhåll", text: "Vår webbplats genomgår för närvarande planerat underhåll. Vi är snart tillbaka." },
+            da: { title: "Under Vedligeholdelse", text: "Vores hjemmeside gennemgår i øjeblikket planlagt vedligeholdelse. Vi er snart tilbage." },
+            no: { title: "Under Vedlikehold", text: "Nettstedet vårt er for tiden under planlagt vedlikehold. Vi er snart tilbake." },
+            fi: { title: "Huoltokatko", text: "Sivustomme on tällä hetkellä huollossa. Palaamme pian." },
+            pl: { title: "Przerwa Techniczna", text: "Nasza strona przechodzi obecnie planowaną konserwację. Wrócimy wkrótce." },
+            tr: { title: "Bakım Aşamasında", text: "Web sitemiz şu anda planlı bakım aşamasındadır. Kısa süre içinde geri döneceğiz." },
+            th: { title: "ปิดปรับปรุงชั่วคราว", text: "เว็บไซต์ของเรากำลังอยู่ระหว่างการปิดปรับปรุงตามกำหนดการ เราจะกลับมาในไม่ช้า" },
+            vi: { title: "Đang Bảo Trì", text: "Trang web của chúng tôi hiện đang được bảo trì theo lịch trình. Chúng tôi sẽ sớm quay trở lại." }
+        };
+
+        function changeLanguage(lang) {
+            const data = translations[lang] || translations['en'];
+            const titleEl = document.getElementById('page-title');
+            const descEl = document.getElementById('page-desc');
+            const mainContent = document.querySelector('.main-content');
+
+            // Simple opacity transition
+            titleEl.style.transition = 'opacity 0.3s ease';
+            descEl.style.transition = 'opacity 0.3s ease';
+
+            titleEl.style.opacity = 0;
+            descEl.style.opacity = 0;
+
+            setTimeout(() => {
+                titleEl.textContent = data.title;
+                descEl.textContent = data.text;
+
+                if (lang === 'ar') {
+                    document.documentElement.dir = "rtl";
+                } else {
+                    document.documentElement.dir = "ltr";
+                }
+
+                titleEl.style.opacity = 1;
+                descEl.style.opacity = 1;
+            }, 300);
+        }
+    </script>
+</body>
+
+</html>
