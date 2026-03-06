@@ -1,0 +1,126 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  max-height: 100%;
+  background-image: url('1080.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 0px;
+}
+
+@media (max-width: 600px) {
+  body {
+    background-image: url('bg.jpg');
+  }
+}
+
+main {
+  height: 100%;
+}
+
+.mycontainer {
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-left: 10vw;
+  padding-top: 20vh;
+}
+
+@media (max-width: 600px) {
+  .mycontainer {
+    padding-left: 0;
+    padding-top: 5vh;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+
+
+.logo-box {
+  display: flex;
+  align-items: center;
+}
+
+.logo-box .logo {
+  display: inline-block;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-bottom: 40px;
+  width: 140px;
+  height: 140px;
+  background-image: url('logo.png');
+}
+
+@media (max-width: 600px) {
+  .logo-box .logo {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+.centered-div {
+  position: initial;
+  padding-bottom: 100px;
+  width: 500px;
+  bottom: 6vh;
+  left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .centered-div {
+    position: fixed;
+    bottom: 0;
+    padding-bottom: 20px;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.centered-div .ios-btn,
+.centered-div .android-btn,
+.centered-div .web-btn {
+  margin-bottom: 30px;
+  display: inline-block;
+  width: 240px;
+  height: 60px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.centered-div .ios-btn {
+  margin-right: 20px;
+  background-image: url('ios-btn.png');
+}
+
+.centered-div .android-btn {
+  background-image: url('android-btn.png');
+}
+
+.centered-div .web-btn {
+  width: 280px;
+  background-image: url('web-btn.png');
+}
+
+@media (max-width: 600px) {
+  .centered-div .ios-btn,
+  .centered-div .android-btn {
+    width: 130px;
+    height: 60px;
+  }
+
+  .centered-div .web-btn {
+    width: 180px;
+    height: 60px;
+  }
+}
