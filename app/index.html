@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#080b14">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="QAT">
+  <title>QAT 網頁除錯工具</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080b14;
+      --panel: rgba(18, 24, 40, 0.84);
+      --field: rgba(255, 255, 255, 0.065);
+      --line: rgba(255, 255, 255, 0.11);
+      --text: #f6f8ff;
+      --muted: #929eb3;
+      --accent: #6d8cff;
+      --accent-2: #a56dff;
+      --danger: #ff7389;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100svh;
+      margin: 0;
+      padding: max(24px, env(safe-area-inset-top)) 18px max(28px, env(safe-area-inset-bottom));
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(109, 140, 255, 0.25), transparent 37%),
+        radial-gradient(circle at 100% 65%, rgba(165, 109, 255, 0.19), transparent 40%),
+        var(--bg);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    main {
+      width: min(100%, 680px);
+      margin: 0 auto;
+    }
+
+    header {
+      margin: 8px 2px 26px;
+    }
+
+    .eyebrow {
+      margin: 0 0 7px;
+      color: #9bb0ff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 8vw, 46px);
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .panel {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    label {
+      display: block;
+      margin: 0 0 9px 2px;
+      color: #c9d1e1;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    input {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      outline: none;
+      color: var(--text);
+      background: var(--field);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      border-color: rgba(109, 140, 255, 0.8);
+      box-shadow: 0 0 0 4px rgba(109, 140, 255, 0.14);
+    }
+
+    input::placeholder {
+      color: #68758b;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      color: white;
+      font-weight: 720;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 26px rgba(109, 140, 255, 0.25);
+    }
+
+    .button-secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .message {
+      min-height: 20px;
+      margin: 11px 2px 0;
+      color: var(--danger);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .history {
+      margin-top: 26px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 2px 11px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .clear-button {
+      padding: 6px 2px;
+      border: 0;
+      color: #9da9bd;
+      font-size: 14px;
+      background: transparent;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .history-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 42px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(18, 24, 40, 0.7);
+    }
+
+    .history-open,
+    .history-remove {
+      border: 0;
+      color: inherit;
+      text-align: left;
+      background: transparent;
+    }
+
+    .history-open {
+      min-width: 0;
+      padding: 13px 14px;
+    }
+
+    .history-url {
+      display: block;
+      overflow: hidden;
+      color: #dce3f3;
+      font-size: 14px;
+      font-weight: 620;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .history-time {
+      display: block;
+      margin-top: 4px;
+      color: #748096;
+      font-size: 12px;
+    }
+
+    .history-remove {
+      display: grid;
+      place-items: center;
+      border-left: 1px solid var(--line);
+      color: #8290a6;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .empty {
+      padding: 24px 16px;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      color: #77849a;
+      text-align: center;
+    }
+
+    .footer-link {
+      display: block;
+      margin-top: 24px;
+      color: #8495c9;
+      font-size: 13px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    @media (max-width: 420px) {
+      .actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">QAT Web Launcher</p>
+      <h1>開啟測試網址</h1>
+      <p class="subtitle">輸入或貼上網址，跳轉前會自動保存到這台裝置的紀錄。</p>
+    </header>
+
+    <section class="panel">
+      <form id="url-form" novalidate>
+        <label for="url-input">網址</label>
+        <input id="url-input" name="url" type="url" inputmode="url" autocapitalize="none" autocomplete="url" autocorrect="off" spellcheck="false" placeholder="https://example.com">
+        <div class="actions">
+          <button class="button button-primary" type="submit">前往</button>
+          <button class="button button-secondary" id="paste-go" type="button">貼上後前往</button>
+        </div>
+        <p class="message" id="message" role="alert"></p>
+      </form>
+    </section>
+
+    <section class="history">
+      <div class="section-heading">
+        <h2>最近開啟</h2>
+        <button class="clear-button" id="clear-history" type="button">清除全部</button>
+      </div>
+      <ul class="history-list" id="history-list"></ul>
+    </section>
+
+    <a class="footer-link" href="../install/">描述檔安裝頁</a>
+  </main>
+
+  <script>
+    (() => {
+      const storageKey = "qat-url-history-v1";
+      const maxHistory = 30;
+      const form = document.querySelector("#url-form");
+      const input = document.querySelector("#url-input");
+      const pasteGoButton = document.querySelector("#paste-go");
+      const clearButton = document.querySelector("#clear-history");
+      const historyList = document.querySelector("#history-list");
+      const message = document.querySelector("#message");
+
+      const readHistory = () => {
+        try {
+          const value = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          return Array.isArray(value) ? value : [];
+        } catch {
+          return [];
+        }
+      };
+
+      const writeHistory = (items) => {
+        localStorage.setItem(storageKey, JSON.stringify(items.slice(0, maxHistory)));
+      };
+
+      const normalizeUrl = (rawValue) => {
+        const value = rawValue.trim();
+        if (!value) {
+          throw new Error("請先輸入網址。");
+        }
+
+        const hasProtocol = /^[a-z][a-z0-9+.-]*:/i.test(value);
+        if (hasProtocol && !/^https?:\/\//i.test(value)) {
+          throw new Error("只支援 http 或 https 網址。");
+        }
+
+        const withProtocol = hasProtocol ? value : `https://${value}`;
+        let url;
+        try {
+          url = new URL(withProtocol);
+        } catch {
+          throw new Error("網址格式不正確。");
+        }
+
+        if (url.protocol !== "http:" && url.protocol !== "https:") {
+          throw new Error("只支援 http 或 https 網址。");
+        }
+
+        return url.href;
+      };
+
+      const formatTime = (timestamp) => new Intl.DateTimeFormat("zh-TW", {
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(new Date(timestamp));
+
+      const removeHistoryItem = (url) => {
+        writeHistory(readHistory().filter((item) => item.url !== url));
+        renderHistory();
+      };
+
+      const renderHistory = () => {
+        const items = readHistory();
+        historyList.replaceChildren();
+        clearButton.hidden = items.length === 0;
+
+        if (items.length === 0) {
+          const empty = document.createElement("li");
+          empty.className = "empty";
+          empty.textContent = "尚未開啟任何網址";
+          historyList.appendChild(empty);
+          return;
+        }
+
+        items.forEach((item) => {
+          const row = document.createElement("li");
+          const openButton = document.createElement("button");
+          const urlText = document.createElement("span");
+          const timeText = document.createElement("span");
+          const removeButton = document.createElement("button");
+
+          row.className = "history-item";
+          openButton.className = "history-open";
+          openButton.type = "button";
+          openButton.addEventListener("click", () => openUrl(item.url));
+
+          urlText.className = "history-url";
+          urlText.textContent = item.url;
+          timeText.className = "history-time";
+          timeText.textContent = formatTime(item.openedAt);
+          openButton.append(urlText, timeText);
+
+          removeButton.className = "history-remove";
+          removeButton.type = "button";
+          removeButton.setAttribute("aria-label", `移除 ${item.url}`);
+          removeButton.textContent = "×";
+          removeButton.addEventListener("click", () => removeHistoryItem(item.url));
+
+          row.append(openButton, removeButton);
+          historyList.appendChild(row);
+        });
+      };
+
+      const openUrl = (rawValue) => {
+        try {
+          const url = normalizeUrl(rawValue);
+          const history = readHistory().filter((item) => item.url !== url);
+          history.unshift({ url, openedAt: Date.now() });
+          writeHistory(history);
+          message.textContent = "";
+          window.location.assign(url);
+        } catch (error) {
+          message.textContent = error.message || "網址格式不正確。";
+          input.focus();
+        }
+      };
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        openUrl(input.value);
+      });
+
+      pasteGoButton.addEventListener("click", async () => {
+        try {
+          const value = await navigator.clipboard.readText();
+          input.value = value;
+          openUrl(value);
+        } catch {
+          message.textContent = "無法讀取剪貼板，請長按網址欄位手動貼上。";
+          input.focus();
+        }
+      });
+
+      clearButton.addEventListener("click", () => {
+        localStorage.removeItem(storageKey);
+        renderHistory();
+      });
+
+      renderHistory();
+    })();
+  </script>
+</body>
+</html>
